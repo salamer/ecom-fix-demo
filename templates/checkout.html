@@ -1,195 +1,76 @@
 {% extends "base.html" %}
-
 {% block content %}
 <div class="container mx-auto px-4 py-12">
-    <h1 class="text-5xl font-black mb-8">
-        <span class="bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">CHECKOUT</span>
-    </h1>
-
-    <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Checkout Form -->
-        <div class="lg:col-span-2 space-y-8">
-            <!-- Contact Information -->
-            <div class="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl border border-gray-800 p-8">
-                <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold mb-2">Email</label>
-                        <input type="email" placeholder="your@email.com" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">Phone</label>
-                        <input type="tel" placeholder="+1 (555) 000-0000" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Shipping Address -->
-            <div class="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl border border-gray-800 p-8">
-                <h2 class="text-2xl font-bold mb-6">Shipping Address</h2>
-                <div class="space-y-4">
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">First Name</label>
-                            <input type="text" placeholder="John" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">Last Name</label>
-                            <input type="text" placeholder="Doe" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">Address</label>
-                        <input type="text" placeholder="123 Sneaker Street" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">Apartment, suite, etc. (optional)</label>
-                        <input type="text" placeholder="Apt 4B" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                    </div>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">City</label>
-                            <input type="text" placeholder="New York" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">State</label>
-                            <input type="text" placeholder="NY" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">ZIP Code</label>
-                            <input type="text" placeholder="10001" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Information -->
-            <div class="bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl border border-gray-800 p-8">
-                <h2 class="text-2xl font-bold mb-6">Payment Information</h2>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold mb-2">Card Number</label>
-                        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-bold mb-2">Expiration Date</label>
-                            <input type="text" placeholder="MM/YY" maxlength="5" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold mb-2">CVV</label>
-                            <input type="text" placeholder="123" maxlength="4" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="lg:col-span-1">
-            <div class="sticky top-24 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl border border-gray-800 p-6">
-                <h2 class="text-2xl font-bold mb-6">Order Summary</h2>
-
-                <div id="checkout-items" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
-                    <!-- Items will be inserted here -->
-                </div>
-
-                <div class="space-y-4 mb-6 border-t border-gray-700 pt-6">
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Subtotal</span>
-                        <span id="checkout-subtotal" class="font-bold">$0.00</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Shipping</span>
-                        <span class="font-bold text-neon-green">FREE</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Tax</span>
-                        <span id="checkout-tax" class="font-bold">$0.00</span>
-                    </div>
-                </div>
-
-                <div class="border-t border-gray-700 pt-4 mb-6">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-bold">Total</span>
-                        <span id="checkout-total" class="text-3xl font-black bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">$0.00</span>
-                    </div>
-                </div>
-
-                <button onclick="placeOrder()" class="w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-4 px-6 rounded-lg hover:opacity-90 transition-opacity mb-4">
-                    Place Order
-                </button>
-
-                <p class="text-xs text-gray-400 text-center">By placing this order, you agree to our Terms of Service and Privacy Policy.</p>
-            </div>
-        </div>
-    </div>
+<h1 class="text-5xl font-black mb-8"><span class="bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">CHECKOUT</span></h1>
+<div class="grid lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-gray-900/50 rounded-2xl border border-gray-800 p-6">
+<h2 class="text-xl font-bold mb-4">Contact</h2>
+<input type="email" placeholder="Email" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink mb-3">
+<input type="tel" placeholder="Phone" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
 </div>
-
-<!-- Success Modal -->
-<div id="success-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-gradient-to-br from-gray-900 to-black border-2 border-neon-green rounded-3xl p-8 max-w-md text-center">
-        <div class="text-6xl mb-4">✨</div>
-        <h2 class="text-3xl font-black mb-4 bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">
-            ORDER PLACED!
-        </h2>
-        <p class="text-gray-300 mb-6">Your fresh kicks are on the way! Check your email for order details.</p>
-        <a href="/" class="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">
-            Continue Shopping
-        </a>
-    </div>
+<div class="bg-gray-900/50 rounded-2xl border border-gray-800 p-6">
+<h2 class="text-xl font-bold mb-4">Shipping</h2>
+<div class="grid md:grid-cols-2 gap-3 mb-3">
+<input type="text" placeholder="First Name" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+<input type="text" placeholder="Last Name" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+</div>
+<input type="text" placeholder="Address" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink mb-3">
+<div class="grid md:grid-cols-3 gap-3">
+<input type="text" placeholder="City" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+<input type="text" placeholder="State" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+<input type="text" placeholder="ZIP" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+</div>
+</div>
+<div class="bg-gray-900/50 rounded-2xl border border-gray-800 p-6">
+<h2 class="text-xl font-bold mb-4">Payment</h2>
+<input type="text" placeholder="Card Number" class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink mb-3">
+<div class="grid md:grid-cols-2 gap-3">
+<input type="text" placeholder="MM/YY" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+<input type="text" placeholder="CVV" class="px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink">
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="sticky top-24 bg-gray-900/50 rounded-2xl border border-gray-800 p-6">
+<h2 class="text-2xl font-bold mb-4">Summary</h2>
+<div id="checkout-items" class="space-y-3 mb-4 max-h-96 overflow-y-auto"></div>
+<div class="border-t border-gray-700 pt-4 mb-4 space-y-2">
+<div class="flex justify-between text-sm"><span class="text-gray-400">Subtotal</span><span id="checkout-subtotal">$0.00</span></div>
+<div class="flex justify-between text-sm"><span class="text-gray-400">Shipping</span><span class="text-neon-green">FREE</span></div>
+<div class="flex justify-between text-sm"><span class="text-gray-400">Tax</span><span id="checkout-tax">$0.00</span></div>
+</div>
+<div class="flex justify-between items-center mb-6"><span class="text-xl font-bold">Total</span><span id="checkout-total" class="text-3xl font-black bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">$0.00</span></div>
+<button onclick="placeOrder()" class="w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-4 rounded-lg hover:opacity-90">Place Order</button>
+</div>
+</div>
+</div>
+</div>
+<div id="success-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+<div class="bg-gray-900 border-2 border-neon-green rounded-3xl p-8 max-w-md text-center">
+<div class="text-6xl mb-4">✨</div>
+<h2 class="text-3xl font-black mb-4 bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">ORDER PLACED!</h2>
+<p class="text-gray-300 mb-6">Your kicks are on the way!</p>
+<a href="/" class="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-8 rounded-lg hover:opacity-90">Continue Shopping</a>
+</div>
 </div>
 {% endblock %}
-
 {% block scripts %}
 <script>
-    function renderCheckout() {
-        const cart = getCart();
-        const itemsContainer = document.getElementById('checkout-items');
-
-        if (cart.length === 0) {
-            window.location.href = '/';
-            return;
-        }
-
-        let subtotal = 0;
-        itemsContainer.innerHTML = cart.map(item => {
-            const itemTotal = item.price * item.quantity;
-            subtotal += itemTotal;
-            return `
-                <div class="flex gap-3 pb-4 border-b border-gray-800">
-                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
-                    <div class="flex-1">
-                        <h3 class="font-bold text-sm">${item.name}</h3>
-                        <p class="text-xs text-gray-400">Size ${item.size} | ${item.color}</p>
-                        <p class="text-xs text-gray-400">Qty: ${item.quantity}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-bold text-neon-pink">$${itemTotal.toFixed(2)}</p>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        const tax = subtotal * 0.08;
-        const total = subtotal + tax;
-
-        document.getElementById('checkout-subtotal').textContent = `$${subtotal.toFixed(2)}`;
-        document.getElementById('checkout-tax').textContent = `$${tax.toFixed(2)}`;
-        document.getElementById('checkout-total').textContent = `$${total.toFixed(2)}`;
-    }
-
-    function placeOrder() {
-        // Show success modal
-        document.getElementById('success-modal').classList.remove('hidden');
-
-        // Clear cart after a short delay
-        setTimeout(() => {
-            clearCart();
-        }, 500);
-    }
-
-    // Initial render
-    renderCheckout();
+function renderCheckout(){
+const cart=getCart();
+if(!cart.length){window.location.href='/';return;}
+let subtotal=0;
+document.getElementById('checkout-items').innerHTML=cart.map(i=>{
+const it=i.price*i.quantity;subtotal+=it;
+return`<div class="flex gap-3 pb-3 border-b border-gray-800"><img src="${i.image}" class="w-16 h-16 object-cover rounded"><div class="flex-1"><h3 class="font-bold text-sm">${i.name}</h3><p class="text-xs text-gray-400">Size ${i.size} | ${i.color} | Qty ${i.quantity}</p></div><p class="font-bold text-neon-pink">$${it.toFixed(2)}</p></div>`;
+}).join('');
+const tax=subtotal*0.08,total=subtotal+tax;
+document.getElementById('checkout-subtotal').textContent='$'+subtotal.toFixed(2);
+document.getElementById('checkout-tax').textContent='$'+tax.toFixed(2);
+document.getElementById('checkout-total').textContent='$'+total.toFixed(2);
+}
+function placeOrder(){document.getElementById('success-modal').classList.remove('hidden');setTimeout(()=>clearCart(),500);}
+renderCheckout();
 </script>
 {% endblock %}

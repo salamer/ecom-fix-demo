@@ -1,251 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'neon-pink': '#FF10F0',
-                        'neon-blue': '#00F0FF',
-                        'neon-green': '#39FF14',
-                        'cyber-purple': '#9D00FF',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .gradient-animation {
-            background-size: 200% 200%;
-            animation: gradient 3s ease infinite;
-        }
-        .cart-badge {
-            min-width: 1.25rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page_title }}</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{'neon-pink':'#FF10F0','neon-blue':'#00F0FF','neon-green':'#39FF14'}}}}</script>
 </head>
 <body class="bg-gradient-to-br from-purple-900 via-black to-indigo-900 min-h-screen text-white">
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-black/50 border-b border-neon-pink/20">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <a href="/" class="text-3xl font-black bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent gradient-animation">
-                    SneakPeak
-                </a>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="hover:text-neon-pink transition-colors">Home</a>
-                    <a href="/#trending" class="hover:text-neon-blue transition-colors">Trending</a>
-                    <a href="/#all-kicks" class="hover:text-neon-green transition-colors">All Kicks</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button onclick="toggleCart()" class="relative hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                        <span id="cart-count" class="cart-badge absolute -top-2 -right-2 bg-neon-pink text-xs rounded-full h-5 px-1.5 flex items-center justify-center font-bold">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Cart Sidebar -->
-    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-black/95 backdrop-blur-xl border-l border-neon-pink/30 transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Your Cart</h2>
-                <button onclick="toggleCart()" class="text-gray-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <div id="cart-items" class="space-y-4 mb-6">
-                <!-- Cart items will be inserted here -->
-            </div>
-            <div class="border-t border-gray-700 pt-4">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-lg">Total:</span>
-                    <span id="cart-total" class="text-2xl font-bold text-neon-pink">$0.00</span>
-                </div>
-                <a href="/checkout" class="block w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 px-6 rounded-lg text-center hover:opacity-90 transition-opacity">
-                    Checkout
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-black/50 border-t border-neon-blue/20 mt-20">
-        <div class="container mx-auto px-4 py-12">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent mb-4">SneakPeak</h3>
-                    <p class="text-gray-400">Fresh kicks for the culture.</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Shop</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="/" class="hover:text-neon-pink transition-colors">New Arrivals</a></li>
-                        <li><a href="/" class="hover:text-neon-pink transition-colors">Trending</a></li>
-                        <li><a href="/" class="hover:text-neon-pink transition-colors">Best Sellers</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-neon-blue transition-colors">Size Guide</a></li>
-                        <li><a href="#" class="hover:text-neon-blue transition-colors">Shipping</a></li>
-                        <li><a href="#" class="hover:text-neon-blue transition-colors">Returns</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4">Connect</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-neon-green transition-colors">Instagram</a></li>
-                        <li><a href="#" class="hover:text-neon-green transition-colors">TikTok</a></li>
-                        <li><a href="#" class="hover:text-neon-green transition-colors">Discord</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 SneakPeak. All rights reserved. No cap.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Cart functionality
-        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-
-        function updateCartUI() {
-            const cartCount = document.getElementById('cart-count');
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-
-            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="text-gray-400 text-center py-8">Your cart is empty</p>';
-                cartTotal.textContent = '$0.00';
-                return;
-            }
-
-            let total = 0;
-            cartItems.innerHTML = cart.map(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                return `
-                    <div class="flex gap-4 bg-gray-900/50 p-4 rounded-lg">
-                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded">
-                        <div class="flex-1">
-                            <h3 class="font-bold">${item.name}</h3>
-                            <p class="text-sm text-gray-400">Size: ${item.size}</p>
-                            <p class="text-sm text-gray-400">Color: ${item.color}</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <button onclick="updateQuantity(${item.id}, ${item.quantity - 1}, '${item.size}', '${item.color}')" class="w-6 h-6 bg-gray-800 rounded hover:bg-gray-700">-</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="updateQuantity(${item.id}, ${item.quantity + 1}, '${item.size}', '${item.color}')" class="w-6 h-6 bg-gray-800 rounded hover:bg-gray-700">+</button>
-                                <button onclick="removeFromCart(${item.id}, '${item.size}', '${item.color}')" class="ml-auto text-red-400 hover:text-red-300">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-neon-pink">$${itemTotal.toFixed(2)}</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-        }
-
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            sidebar.classList.toggle('translate-x-full');
-        }
-
-        function addToCart(product, size, color) {
-            const existing = cart.find(item => item.id === product.id && item.size === size && item.color === color);
-
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    size: size,
-                    color: color,
-                    quantity: 1
-                });
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
-            toggleCart();
-        }
-
-        function updateQuantity(id, newQuantity, size, color) {
-            if (newQuantity <= 0) {
-                removeFromCart(id, size, color);
-                return;
-            }
-
-            const item = cart.find(item => item.id === id && item.size === size && item.color === color);
-            if (item) {
-                item.quantity = newQuantity;
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateCartUI();
-            }
-        }
-
-        function removeFromCart(id, size, color) {
-            cart = cart.filter(item => !(item.id === id && item.size === size && item.color === color));
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        function getCart() {
-            return cart;
-        }
-
-        function clearCart() {
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        // Initialize cart on page load
-        updateCartUI();
-    </script>
-
-    {% block scripts %}{% endblock %}
+<nav class="sticky top-0 z-50 backdrop-blur-lg bg-black/50 border-b border-neon-pink/20">
+<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+<a href="/" class="text-3xl font-black bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">SneakPeak</a>
+<button onclick="toggleCart()" class="relative hover:scale-110 transition-transform">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+<span id="cart-count" class="absolute -top-2 -right-2 bg-neon-pink text-xs rounded-full h-5 min-w-[1.25rem] px-1.5 flex items-center justify-center font-bold">0</span>
+</button>
+</div>
+</nav>
+<div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-black/95 backdrop-blur-xl border-l border-neon-pink/30 transform translate-x-full transition-transform z-50 overflow-y-auto">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl font-bold">Cart</h2>
+<button onclick="toggleCart()"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+</div>
+<div id="cart-items" class="space-y-4 mb-6"></div>
+<div class="border-t border-gray-700 pt-4">
+<div class="flex justify-between mb-4"><span>Total:</span><span id="cart-total" class="text-2xl font-bold text-neon-pink">$0.00</span></div>
+<a href="/checkout" class="block w-full bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-3 rounded-lg text-center hover:opacity-90">Checkout</a>
+</div>
+</div>
+</div>
+<main>{% block content %}{% endblock %}</main>
+<script>
+let cart=JSON.parse(localStorage.getItem('cart')||'[]');
+function updateCartUI(){
+const cc=document.getElementById('cart-count'),ci=document.getElementById('cart-items'),ct=document.getElementById('cart-total');
+cc.textContent=cart.reduce((s,i)=>s+i.quantity,0);
+if(!cart.length){ci.innerHTML='<p class="text-gray-400 text-center py-8">Empty</p>';ct.textContent='$0.00';return;}
+let total=0;
+ci.innerHTML=cart.map(item=>{
+const it=item.price*item.quantity;total+=it;
+return`<div class="flex gap-4 bg-gray-900/50 p-4 rounded-lg"><img src="${item.image}" class="w-20 h-20 object-cover rounded"><div class="flex-1"><h3 class="font-bold">${item.name}</h3><p class="text-sm text-gray-400">Size ${item.size} | ${item.color}</p><div class="flex items-center gap-2 mt-2"><button onclick="updateQuantity(${item.id},${item.quantity-1},'${item.size}','${item.color}')" class="w-6 h-6 bg-gray-800 rounded">-</button><span>${item.quantity}</span><button onclick="updateQuantity(${item.id},${item.quantity+1},'${item.size}','${item.color}')" class="w-6 h-6 bg-gray-800 rounded">+</button><button onclick="removeFromCart(${item.id},'${item.size}','${item.color}')" class="ml-auto text-red-400">×</button></div></div><div class="text-right"><p class="font-bold text-neon-pink">$${it.toFixed(2)}</p></div></div>`;
+}).join('');
+ct.textContent='$'+total.toFixed(2);
+}
+function toggleCart(){document.getElementById('cart-sidebar').classList.toggle('translate-x-full');}
+function addToCart(product,size,color){
+const ex=cart.find(i=>i.id===product.id&&i.size===size&&i.color===color);
+if(ex)ex.quantity+=1;else cart.push({id:product.id,name:product.name,price:product.price,image:product.image,size:size,color:color,quantity:1});
+localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();toggleCart();
+}
+function updateQuantity(id,q,size,color){
+if(q<=0){removeFromCart(id,size,color);return;}
+const item=cart.find(i=>i.id===id&&i.size===size&&i.color===color);
+if(item){item.quantity=q;localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();}
+}
+function removeFromCart(id,size,color){cart=cart.filter(i=>!(i.id===id&&i.size===size&&i.color===color));localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();}
+function getCart(){return cart;}
+function clearCart(){cart=[];localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();}
+updateCartUI();
+</script>
+{% block scripts %}{% endblock %}
 </body>
 </html>

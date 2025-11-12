@@ -1,168 +1,46 @@
 {% extends "base.html" %}
-
 {% block content %}
-<!-- Hero Section -->
-<section class="relative overflow-hidden">
-    <div class="container mx-auto px-4 py-20">
-        <div class="text-center">
-            <h1 class="text-6xl md:text-8xl font-black mb-6">
-                <span class="bg-gradient-to-r from-neon-pink via-neon-blue to-neon-green bg-clip-text text-transparent gradient-animation">
-                    STEP INTO
-                </span>
-                <br>
-                <span class="text-white">THE FUTURE</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Curated kicks that hit different. No cap, just straight fire.
-            </p>
-            <a href="#all-kicks" class="inline-block bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform">
-                Shop The Vibe
-            </a>
-        </div>
-    </div>
-
-    <!-- Floating Elements -->
-    <div class="absolute top-20 left-10 opacity-20 float-animation" style="animation-delay: 0s;">
-        <div class="w-20 h-20 bg-neon-pink rounded-full blur-xl"></div>
-    </div>
-    <div class="absolute top-40 right-20 opacity-20 float-animation" style="animation-delay: 1s;">
-        <div class="w-32 h-32 bg-neon-blue rounded-full blur-xl"></div>
-    </div>
-    <div class="absolute bottom-20 left-1/3 opacity-20 float-animation" style="animation-delay: 2s;">
-        <div class="w-24 h-24 bg-neon-green rounded-full blur-xl"></div>
-    </div>
+<section class="container mx-auto px-4 py-20 text-center">
+<h1 class="text-6xl md:text-8xl font-black mb-6"><span class="bg-gradient-to-r from-neon-pink via-neon-blue to-neon-green bg-clip-text text-transparent">STEP INTO THE FUTURE</span></h1>
+<p class="text-xl text-gray-300 mb-8">Curated kicks that hit different</p>
 </section>
-
-<!-- Trending Section -->
-<section id="trending" class="container mx-auto px-4 py-16">
-    <div class="flex items-center justify-between mb-8">
-        <h2 class="text-4xl md:text-5xl font-black">
-            <span class="bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">TRENDING NOW</span>
-        </h2>
-        <div class="flex gap-2">
-            <span class="px-3 py-1 bg-neon-pink/20 text-neon-pink rounded-full text-sm font-bold">🔥 HOT</span>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-        {% for sneaker in sneakers %}
-        {% if sneaker.trending %}
-        <div class="group relative bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-pink/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-neon-pink/20">
-            <a href="/product/{{ sneaker.id }}" class="block">
-                <div class="aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                    <img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class="p-5">
-                    <div class="flex items-start justify-between mb-2">
-                        <div>
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">{{ sneaker.brand }}</p>
-                            <h3 class="font-bold text-lg mb-1">{{ sneaker.name }}</h3>
-                        </div>
-                        <span class="text-neon-pink font-bold text-xl">${{ "%.2f"|format(sneaker.price) }}</span>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="flex">
-                            {% for i in range(5) %}
-                            <svg class="w-4 h-4 {{ 'text-yellow-400' if i < sneaker.rating else 'text-gray-600' }}" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-                            {% endfor %}
-                        </div>
-                        <span class="text-xs text-gray-400">({{ sneaker.reviews }})</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-3">
-                        {% for color in sneaker.colors[:3] %}
-                        <span class="px-2 py-1 bg-gray-800/50 text-xs rounded-full text-gray-300">{{ color }}</span>
-                        {% endfor %}
-                    </div>
-                    <button onclick="quickAdd(event, {{ sneaker|tojson }})" class="w-full bg-gradient-to-r from-neon-pink/20 to-neon-blue/20 hover:from-neon-pink/30 hover:to-neon-blue/30 border border-neon-pink/50 text-white font-bold py-2 rounded-lg transition-all">
-                        Quick Add
-                    </button>
-                </div>
-            </a>
-        </div>
-        {% endif %}
-        {% endfor %}
-    </div>
-</section>
-
-<!-- All Products Section -->
-<section id="all-kicks" class="container mx-auto px-4 py-16">
-    <h2 class="text-4xl md:text-5xl font-black mb-8">
-        <span class="bg-gradient-to-r from-neon-blue to-neon-green bg-clip-text text-transparent">ALL KICKS</span>
-    </h2>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {% for sneaker in sneakers %}
-        <div class="group relative bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-lg rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-blue/50 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-neon-blue/20">
-            <a href="/product/{{ sneaker.id }}" class="block">
-                {% if sneaker.trending %}
-                <div class="absolute top-4 left-4 z-10 px-3 py-1 bg-neon-pink text-white text-xs font-bold rounded-full">
-                    🔥 TRENDING
-                </div>
-                {% endif %}
-                <div class="aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                    <img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                </div>
-                <div class="p-5">
-                    <div class="flex items-start justify-between mb-2">
-                        <div>
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">{{ sneaker.brand }}</p>
-                            <h3 class="font-bold text-lg mb-1">{{ sneaker.name }}</h3>
-                        </div>
-                        <span class="text-neon-blue font-bold text-xl">${{ "%.2f"|format(sneaker.price) }}</span>
-                    </div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <div class="flex">
-                            {% for i in range(5) %}
-                            <svg class="w-4 h-4 {{ 'text-yellow-400' if i < sneaker.rating else 'text-gray-600' }}" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                            </svg>
-                            {% endfor %}
-                        </div>
-                        <span class="text-xs text-gray-400">({{ sneaker.reviews }})</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1 mb-3">
-                        {% for color in sneaker.colors[:3] %}
-                        <span class="px-2 py-1 bg-gray-800/50 text-xs rounded-full text-gray-300">{{ color }}</span>
-                        {% endfor %}
-                    </div>
-                    <button onclick="quickAdd(event, {{ sneaker|tojson }})" class="w-full bg-gradient-to-r from-neon-blue/20 to-neon-green/20 hover:from-neon-blue/30 hover:to-neon-green/30 border border-neon-blue/50 text-white font-bold py-2 rounded-lg transition-all">
-                        Quick Add
-                    </button>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="container mx-auto px-4 py-16">
-    <div class="bg-gradient-to-r from-neon-pink/10 to-neon-blue/10 border border-neon-pink/30 rounded-3xl p-12 text-center">
-        <h2 class="text-4xl font-black mb-4">STAY IN THE LOOP</h2>
-        <p class="text-gray-300 mb-8">Get early access to drops, exclusive deals, and all the tea.</p>
-        <div class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-            <input type="email" placeholder="your@email.com" class="flex-1 px-6 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-neon-pink transition-colors">
-            <button class="bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity">
-                Subscribe
-            </button>
-        </div>
-    </div>
+<section class="container mx-auto px-4 pb-16">
+<h2 class="text-4xl font-black mb-8"><span class="bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">TRENDING</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+{% for sneaker in sneakers %}{% if sneaker.trending %}
+<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-pink/50 transition-all hover:scale-105">
+<a href="/product/{{ sneaker.id }}">
+<div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
+<div class="p-5">
+<div class="flex justify-between mb-2">
+<div><p class="text-xs text-gray-400 uppercase">{{ sneaker.brand }}</p><h3 class="font-bold">{{ sneaker.name }}</h3></div>
+<span class="text-neon-pink font-bold">${{ "%.0f"|format(sneaker.price) }}</span>
+</div>
+<button onclick="quickAdd(event,{{ sneaker|tojson }})" class="w-full bg-neon-pink/20 border border-neon-pink/50 text-white font-bold py-2 rounded-lg hover:bg-neon-pink/30">Add</button>
+</div>
+</a>
+</div>
+{% endif %}{% endfor %}
+</div>
+<h2 class="text-4xl font-black mb-8"><span class="bg-gradient-to-r from-neon-blue to-neon-green bg-clip-text text-transparent">ALL KICKS</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+{% for sneaker in sneakers %}
+<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-blue/50 transition-all hover:scale-105">
+<a href="/product/{{ sneaker.id }}">
+<div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
+<div class="p-5">
+<div class="flex justify-between mb-2">
+<div><p class="text-xs text-gray-400 uppercase">{{ sneaker.brand }}</p><h3 class="font-bold">{{ sneaker.name }}</h3></div>
+<span class="text-neon-blue font-bold">${{ "%.0f"|format(sneaker.price) }}</span>
+</div>
+<button onclick="quickAdd(event,{{ sneaker|tojson }})" class="w-full bg-neon-blue/20 border border-neon-blue/50 text-white font-bold py-2 rounded-lg hover:bg-neon-blue/30">Add</button>
+</div>
+</a>
+</div>
+{% endfor %}
+</div>
 </section>
 {% endblock %}
-
 {% block scripts %}
-<script>
-    function quickAdd(event, product) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        // Default to first available size and color
-        const size = product.sizes[0];
-        const color = product.colors[0];
-
-        addToCart(product, size, color);
-    }
-</script>
+<script>function quickAdd(e,p){e.preventDefault();e.stopPropagation();addToCart(p,p.sizes[0],p.colors[0]);}</script>
 {% endblock %}

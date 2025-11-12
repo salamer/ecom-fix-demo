@@ -7,9 +7,6 @@ import json
 
 app = FastAPI()
 
-# Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 # Templates
 templates = Jinja2Templates(directory="templates")
 
@@ -173,23 +170,10 @@ async def product_detail(request: Request, product_id: int):
     product = next((s for s in SNEAKERS if s["id"] == product_id), None)
     if not product:
       return JSONResponse(content={"error": "Product not found"}, status_code=404)
-
-    # Get related products (same category, different product)
-    related = [s for s in SNEAKERS if s["category"] == product["category"] and s["id"] != product_id][:3]
-
     return templates.TemplateResponse("product.html", {
         "request": request,
         "product": product,
-        "related": related,
         "page_title": f"{product['name']} - SneakPeak"
-    })
-
-@app.get("/cart")
-async def cart(request: Request):
-    """Shopping cart page"""
-    return templates.TemplateResponse("cart.html", {
-        "request": request,
-        "page_title": "Your Cart - SneakPeak"
     })
 
 @app.get("/checkout")
