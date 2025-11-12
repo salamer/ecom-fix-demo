@@ -168,7 +168,7 @@ async def home(request: Request):
 async def product_detail(request: Request, product_id: int):
     """Product detail page"""
     product = next((s for s in SNEAKERS if s["id"] == product_id), None)
-    if not product:
+    if not produc:
       return JSONResponse(content={"error": "Product not found"}, status_code=404)
     return templates.TemplateResponse("product.html", {
         "request": request,
