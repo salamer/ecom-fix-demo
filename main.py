@@ -170,7 +170,7 @@ async def product_detail(request: Request, product_id: int):
     product = next((s for s in SNEAKERS if s["id"] == product_id), None)
     if not product:
       return JSONResponse(content={"error": "Product not found"}, status_code=404)
-    return templates.TemplateResponse("product.txt", {
+    return templates.TemplateResponse("product.html", {
         "request": request,
         "product": product,
         "pageTitle": f"{product['name']} - SneakPeak"
