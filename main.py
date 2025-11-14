@@ -3,12 +3,19 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from typing import List, Optional
+from pydantic import BaseModel
+from datetime import datetime
 import json
 
 app = FastAPI()
 
 # Templates
 templates = Jinja2Templates(directory="templates")
+
+# Pydantic Models
+class TrackingRequest(BaseModel):
+    product_id: int
+    event_type: str
 
 # Mock sneaker data - Gen-Z vibes
 SNEAKERS = [
@@ -160,6 +167,34 @@ async def get_categories():
     """Get all unique categories"""
     categories = list(set(s["category"] for s in SNEAKERS))
     return JSONResponse(content=categories)
+
+@app.post("/api/track/product-click")
+async def track_product_click(tracking_data: TrackingRequest):
+    """Track product click events"""
+    # Find product by ID
+    product = next((s for s in SNEAKERS if s["id"] == tracking_data.product_id), None)
+
+    if not product:
+        return JSONResponse(
+            content={"error": "Product not found"},
+            status_code=404
+        )
+
+    # Get current timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Format tracking output
+    tracking_log = (
+        f"Time: {timestamp} | "
+        f"Event Type: {tracking_data.event_type} | "
+        f"Product Name: {product['name']} | "
+        f"Price: ${product['price']:.2f}"
+    )
+
+    # Print to console
+    print(tracking_log)
+
+    return JSONResponse(content={"status": "success", "tracked": True})
 
 # Frontend Routes
 @app.get("/")

@@ -58,6 +58,9 @@ if(item){item.quantity=q;localStorage.setItem('cart',JSON.stringify(cart));updat
 function removeFromCart(id,size,color){cart=cart.filter(i=>!(i.id===id&&i.size===size&&i.color===color));localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();}
 function getCart(){return cart;}
 function clearCart(){cart=[];localStorage.setItem('cart',JSON.stringify(cart));updateCartUI();}
+function trackProductClick(productId,eventType){
+fetch('/api/track/product-click',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product_id:productId,event_type:eventType})}).catch(err=>console.error('Tracking failed:',err));
+}
 updateCartUI();
 </script>
 {% block scripts %}{% endblock %}

@@ -45,7 +45,7 @@
 <p class="text-neon-green text-lg font-bold animate-pulse">{{ sneaker.promotion.urgency_text }}</p>
 
 <!-- CTA Button -->
-<a href="/product/{{ sneaker.id }}" class="inline-block bg-gradient-to-r from-neon-pink to-neon-green text-black font-black text-xl px-12 py-4 rounded-full hover:scale-110 transition-transform shadow-lg shadow-neon-pink/50">
+<a href="/product/{{ sneaker.id }}" onclick="trackProductClick({{ sneaker.id }},'product_view')" class="inline-block bg-gradient-to-r from-neon-pink to-neon-green text-black font-black text-xl px-12 py-4 rounded-full hover:scale-110 transition-transform shadow-lg shadow-neon-pink/50">
 SHOP NOW
 </a>
 
@@ -73,7 +73,7 @@ SHOP NOW
 </div>
 </div>
 {% endif %}
-<a href="/product/{{ sneaker.id }}">
+<a href="/product/{{ sneaker.id }}" onclick="trackProductClick({{ sneaker.id }},'product_view')">
 <div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
 <div class="p-5">
 <div class="flex justify-between mb-2">
@@ -105,7 +105,7 @@ SHOP NOW
 </div>
 </div>
 {% endif %}
-<a href="/product/{{ sneaker.id }}">
+<a href="/product/{{ sneaker.id }}" onclick="trackProductClick({{ sneaker.id }},'product_view')">
 <div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
 <div class="p-5">
 <div class="flex justify-between mb-2">
