@@ -4,17 +4,88 @@
 <h1 class="text-6xl md:text-8xl font-black mb-6"><span class="bg-gradient-to-r from-neon-pink via-neon-blue to-neon-green bg-clip-text text-transparent">STEP INTO THE FUTURE</span></h1>
 <p class="text-xl text-gray-300 mb-8">Curated kicks that hit different</p>
 </section>
+
+<!-- Hero Product Section - Product 1 Featured -->
+{% for sneaker in sneakers %}{% if sneaker.id == 1 and sneaker.get('promotion', {}).get('active') %}
+<section class="container mx-auto px-4 pb-16">
+<div class="relative bg-gradient-to-br from-neon-pink/20 via-neon-blue/20 to-neon-green/20 rounded-3xl overflow-hidden border-2 border-neon-pink shadow-2xl shadow-neon-pink/20">
+<!-- Animated glow effect -->
+<div class="absolute inset-0 bg-gradient-to-r from-neon-pink/30 via-transparent to-neon-green/30 animate-pulse"></div>
+
+<div class="relative grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
+<!-- Product Image -->
+<div class="relative">
+<div class="absolute -inset-4 bg-gradient-to-r from-neon-pink to-neon-green rounded-full blur-3xl opacity-30 animate-pulse"></div>
+<img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="relative w-full h-auto rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+</div>
+
+<!-- Product Info -->
+<div class="text-left space-y-6">
+<!-- Flash Sale Badge -->
+<div class="inline-block">
+<div class="bg-neon-pink text-black font-black text-sm px-4 py-2 rounded-full uppercase animate-pulse shadow-lg shadow-neon-pink/50">
+{{ sneaker.promotion.message }}
+</div>
+</div>
+
+<h2 class="text-5xl md:text-6xl font-black">
+<span class="bg-gradient-to-r from-neon-pink to-neon-green bg-clip-text text-transparent">{{ sneaker.name }}</span>
+</h2>
+
+<p class="text-xl text-gray-300">{{ sneaker.description }}</p>
+
+<!-- Price Section -->
+<div class="flex items-baseline gap-4">
+<span class="text-5xl font-black text-neon-pink">${{ "%.0f"|format(sneaker.price * (100 - sneaker.promotion.discount_percent) / 100) }}</span>
+<span class="text-3xl text-gray-500 line-through">${{ "%.0f"|format(sneaker.price) }}</span>
+<span class="bg-neon-green text-black font-black text-2xl px-3 py-1 rounded-lg">{{ sneaker.promotion.badge_text }}</span>
+</div>
+
+<!-- Urgency Text -->
+<p class="text-neon-green text-lg font-bold animate-pulse">{{ sneaker.promotion.urgency_text }}</p>
+
+<!-- CTA Button -->
+<a href="/product/{{ sneaker.id }}" class="inline-block bg-gradient-to-r from-neon-pink to-neon-green text-black font-black text-xl px-12 py-4 rounded-full hover:scale-110 transition-transform shadow-lg shadow-neon-pink/50">
+SHOP NOW
+</a>
+
+<!-- Social Proof -->
+<div class="flex items-center gap-2 text-gray-400">
+<span class="text-yellow-400 text-xl">★ {{ sneaker.rating }}</span>
+<span>•</span>
+<span>{{ sneaker.reviews }} reviews</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endif %}{% endfor %}
 <section class="container mx-auto px-4 pb-16">
 <h2 class="text-4xl font-black mb-8"><span class="bg-gradient-to-r from-neon-pink to-neon-blue bg-clip-text text-transparent">TRENDING</span></h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
 {% for sneaker in sneakers %}{% if sneaker.trending %}
-<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-pink/50 transition-all hover:scale-105">
+<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-pink/50 transition-all hover:scale-105 relative">
+<!-- Promotional Badge -->
+{% if sneaker.get('promotion', {}).get('active') %}
+<div class="absolute top-3 right-3 z-10">
+<div class="bg-neon-pink text-black font-black text-xs px-3 py-1.5 rounded-full uppercase shadow-lg shadow-neon-pink/50 animate-pulse">
+{{ sneaker.promotion.badge_text }}
+</div>
+</div>
+{% endif %}
 <a href="/product/{{ sneaker.id }}">
 <div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
 <div class="p-5">
 <div class="flex justify-between mb-2">
 <div><p class="text-xs text-gray-400 uppercase">{{ sneaker.brand }}</p><h3 class="font-bold">{{ sneaker.name }}</h3></div>
+{% if sneaker.get('promotion', {}).get('active') %}
+<div class="text-right">
+<span class="text-neon-pink font-black block">${{ "%.0f"|format(sneaker.price * (100 - sneaker.promotion.discount_percent) / 100) }}</span>
+<span class="text-gray-500 text-xs line-through">${{ "%.0f"|format(sneaker.price) }}</span>
+</div>
+{% else %}
 <span class="text-neon-pink font-bold">${{ "%.0f"|format(sneaker.price) }}</span>
+{% endif %}
 </div>
 <button onclick="quickAdd(event,{{ sneaker|tojson }})" class="w-full bg-neon-pink/20 border border-neon-pink/50 text-white font-bold py-2 rounded-lg hover:bg-neon-pink/30">Add</button>
 </div>
@@ -25,13 +96,28 @@
 <h2 class="text-4xl font-black mb-8"><span class="bg-gradient-to-r from-neon-blue to-neon-green bg-clip-text text-transparent">ALL KICKS</span></h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 {% for sneaker in sneakers %}
-<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-blue/50 transition-all hover:scale-105">
+<div class="group bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-blue/50 transition-all hover:scale-105 relative">
+<!-- Promotional Badge -->
+{% if sneaker.get('promotion', {}).get('active') %}
+<div class="absolute top-3 right-3 z-10">
+<div class="bg-neon-pink text-black font-black text-xs px-3 py-1.5 rounded-full uppercase shadow-lg shadow-neon-pink/50 animate-pulse">
+{{ sneaker.promotion.badge_text }}
+</div>
+</div>
+{% endif %}
 <a href="/product/{{ sneaker.id }}">
 <div class="aspect-square bg-gray-800"><img src="{{ sneaker.image }}" alt="{{ sneaker.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform"></div>
 <div class="p-5">
 <div class="flex justify-between mb-2">
 <div><p class="text-xs text-gray-400 uppercase">{{ sneaker.brand }}</p><h3 class="font-bold">{{ sneaker.name }}</h3></div>
+{% if sneaker.get('promotion', {}).get('active') %}
+<div class="text-right">
+<span class="text-neon-blue font-black block">${{ "%.0f"|format(sneaker.price * (100 - sneaker.promotion.discount_percent) / 100) }}</span>
+<span class="text-gray-500 text-xs line-through">${{ "%.0f"|format(sneaker.price) }}</span>
+</div>
+{% else %}
 <span class="text-neon-blue font-bold">${{ "%.0f"|format(sneaker.price) }}</span>
+{% endif %}
 </div>
 <button onclick="quickAdd(event,{{ sneaker|tojson }})" class="w-full bg-neon-blue/20 border border-neon-blue/50 text-white font-bold py-2 rounded-lg hover:bg-neon-blue/30">Add</button>
 </div>

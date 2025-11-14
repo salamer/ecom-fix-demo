@@ -24,7 +24,14 @@ SNEAKERS = [
         "rating": 4.8,
         "reviews": 234,
         "category": "Lifestyle",
-        "trending": True
+        "trending": True,
+        "promotion": {
+            "active": True,
+            "discount_percent": 20,
+            "badge_text": "20% OFF",
+            "message": "LIMITED TIME FLASH SALE",
+            "urgency_text": "Ends Soon!"
+        }
     },
     {
         "id": 2,
